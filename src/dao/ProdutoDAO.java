@@ -1,33 +1,56 @@
 package dao;
 
-import pojo.Produto;
+import java.util.ArrayList;
 
-public class ProdutoDAO implements CrudProdutoDAO {
+import Execption.ProducteNotFoudExecption;
+import Execption.ProdutoIgualExecption;
+import dto.ProdutoDTO;
 
-	public Produto creatProduct(Produto produto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public Produto readProduct(Produto produto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+public class ProdutoDAO implements CrudDAO<ProdutoDTO> {
 
-	@Override
-	public Produto updateProduct(Produto produto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deleteProduct(Produto produto) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	private ArrayList<ProdutoDTO> todosOsProdutos;
 
 	
+	public ProdutoDAO() {
+		this.todosOsProdutos = new ArrayList<>();
+	}
+	
+	@Override
+	public ArrayList<ProdutoDTO> getList() {
+		return todosOsProdutos;
+	}
 
+	@Override
+	public boolean create(Object object) throws ProdutoIgualExecption {
+		ProdutoDTO produtoDTO = (ProdutoDTO) object;
+		for(int i = 0; i < todosOsProdutos.size();i++) {
+			if(todosOsProdutos.get(i).getNome().equals(produtoDTO.getNome())) {
+				throw new ProdutoIgualExecption();
+			}
+		}
+		todosOsProdutos.add(produtoDTO);
+		return true;
+	}
+
+	@Override
+	public ProdutoDTO read(Object object) throws ProducteNotFoudExecption {
+		ProdutoDTO producteDTO = (ProdutoDTO) object;
+		for(int i = 0; i < todosOsProdutos.size();i++) {
+			if(todosOsProdutos.get(i).getNome().equals(producteDTO.getNome())) {
+				return todosOsProdutos.get(i);
+			}
+		}
+		throw new ProducteNotFoudExecption();
+	}
+
+	@Override
+	public boolean update(Object object) {
+		return true;
+	}
+
+	@Override
+	public void delect(Object object) {
+		
+	}
 }

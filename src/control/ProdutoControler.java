@@ -1,32 +1,47 @@
 package control;
 
-import dao.CrudProdutoDAO;
-import pojo.Produto;
+import java.time.LocalDate;
 
-public class ProdutoControler implements CrudProdutoDAO {
+import Execption.ProducteNotFoudExecption;
+import dto.ProdutoDTO;
+import model.Produto;
+import view.ProgramaView;
 
+public class ProdutoControler {
 	
-	public Produto creatProduct(Produto produto) {
-		// TODO Auto-generated method stub
-		return null;
+	private static	ProdutoControler instanciProdutoCTL;
+	private Produto produtoModel;
+	private ProgramaView view;
+	
+	public ProdutoControler() {
+		this.produtoModel = new Produto();
+		this.view = new ProgramaView();
 	}
-
-	@Override
-	public Produto readProduct(Produto produto) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public static ProdutoControler getProdutoControlerInstaci() {
+		if(instanciProdutoCTL == null) {
+			return new ProdutoControler();
+		}
+		return instanciProdutoCTL;
 	}
-
-	@Override
-	public Produto updateProduct(Produto produto) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public void creatProduct(String nome,int ID,LocalDate validade,int valor) {
+		ProdutoDTO produtoDTO = new ProdutoDTO(nome,ID,validade,valor);
+		produtoModel.applyTarifa(produtoDTO);
+		produtoModel.productConectCreate(produtoDTO);
 	}
-
-	@Override
-	public void deleteProduct(Produto produto) {
-		// TODO Auto-generated method stub
+	
+	public void displayAllProduct() {
+		view.displayProducts(produtoModel.productConectDisplay());
+	}
+	
+	public void displayProducte(ProdutoDTO produto) {
+	try {
+		view.displayProducte(produtoModel.producteConectRead(produto));
+	}catch (ProducteNotFoudExecption erro) {
+		System.out.println(erro);
+	}
 		
 	}
-
+	
 }
