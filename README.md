@@ -1,2 +1,2 @@
 # Atividade-PP
- Atividade MVC
+Utilização dos Padrões MVC, DAO (Data Access Object) e DTO (Data Transfer Object) como resultado de um estudo inicial, apresentados aqui com o intuito de demonstrar e facilitar a compreensão do processo e a consolidação do aprendizado....
